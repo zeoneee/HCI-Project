@@ -6,42 +6,65 @@ string chooseImage() {
 	int k;
 	string res;
 
-	cout << "¾î¶² ÀÌ¹ÌÁö¸¦ ÀÌ¿ëÇÏ½Ã°Ú½À´Ï±î?" << endl;
-	cout << "1.Â¯±¸  2.µµ¶ó¿¡¸ù  3.¿¤»ç  4.±× ¿Ü" << endl;
+	Mat example = imread("image/all.png");
+	imshow("Example", example);
+
+	cout << "ì›í•˜ì‹œëŠ” ì´ë¯¸ì§€ì˜ ë²ˆí˜¸ë¥¼ ìž…ë ¥í•´ì£¼ì„¸ìš”. (ê·¸ ì™¸ '0' ìž…ë ¥)" << endl;
 	cin >> k;
 	switch (k) {
+	case 0:
+		cout << "íŒŒì¼ ê²½ë¡œë¥¼ ìž…ë ¥í•´ ì£¼ì„¸ìš”" << endl;
+		cin >> res;
 	case 1:
-		res = "image/img1.png";
+		res = "image/1.jpg";
 		break;
 	case 2:
-		res = "image/img2.png";
+		res = "image/2.jpg";
 		break;
 	case 3:
-		res = "image/img3.png";
+		res = "image/3.jpg";
 		break;
 	case 4:
-		cout << "ÆÄÀÏ °æ·Î¸¦ ÀÔ·ÂÇØ ÁÖ¼¼¿ä" << endl;
-		cin >> res;
+		res = "image/4.jpg";
+		break;
+	case 5:
+		res = "image/5.jpg";
+		break;
+	case 6:
+		res = "image/6.jpg";
+		break;
+	case 7:
+		res = "image/7.jpg";
+		break;
+	case 8:
+		res = "image/8.jpg";
+		break;
+	case 9:
+		res = "image/9.jpg";
+		break;
+	case 10:
+		res = "image/10.jpg";
+		break;
 	default:
-		cout << "Àß¸øµÈ ÀÔ·ÂÀÔ´Ï´Ù." << endl;
+		cout << "ìž˜ëª»ëœ ìž…ë ¥ìž…ë‹ˆë‹¤." << endl;
 	}
 	return res;
 }
 
 Mat extract(Mat img) {
 
-	Mat img2gray; // ÇÕ¼ºÇÒ ÀÌ¹ÌÁö¸¦ Èæ¹éÀ¸·Î º¯È¯ 
+	Mat img2gray; // í•©ì„±í•  ì´ë¯¸ì§€ë¥¼ í‘ë°±ìœ¼ë¡œ ë³€í™˜ 
 	cvtColor(img, img2gray, CV_BGR2GRAY);
 
-	Mat mask;	// Èæ¹é ÀÌ¹ÌÁö¸¦ ÀÓ°è°ªÀ¸·Î ÀÌÁøÈ­ÇØ ¸¶½ºÅ© »ý¼º
+	Mat mask;	// í‘ë°± ì´ë¯¸ì§€ë¥¼ ìž„ê³„ê°’ìœ¼ë¡œ ì´ì§„í™”í•´ ë§ˆìŠ¤í¬ ìƒì„±
 	threshold(img2gray, mask, 250, 255, THRESH_BINARY);
 
-	// ÇØ´ç ¸¶½ºÅ©ÀÇ ¿ªÃ³¸®
+	// í•´ë‹¹ ë§ˆìŠ¤í¬ì˜ ì—­ì²˜ë¦¬
 	Mat mask_inv;
 	bitwise_not(mask, mask_inv);
 	imshow("mask_inv", mask_inv);
 
-	// ¿öÅÍ¸¶Å© ÀÌ¹ÌÁö¿¡¼­ ¿öÅÍ¸¶Å© ¿µ¿ª¸¸ ÃßÃâ(and ºñÆ®¿¬»ê, ¿ª ¸¶½ºÅ© ¿µ¿ª)
+	// ì›Œí„°ë§ˆí¬ ì´ë¯¸ì§€ì—ì„œ ì›Œí„°ë§ˆí¬ ì˜ì—­ë§Œ ì¶”ì¶œ(and ë¹„íŠ¸ì—°ì‚°, ì—­ ë§ˆìŠ¤í¬ ì˜ì—­)
 	Mat img2_fg;
 	bitwise_and(img, img, img2_fg, mask = mask_inv);
 	imshow("img_small", img);

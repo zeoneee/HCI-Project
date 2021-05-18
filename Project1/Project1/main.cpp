@@ -46,6 +46,12 @@ int main() {
 		inRange(YCrCb, Scalar(0, 130, 90), Scalar(255, 168, 130), Skin_Area);
 		imshow("Skin_Area", Skin_Area);
 
+		// 중심점 찾기 
+		Moments m = moments(Skin_Area, true);
+		Point p(m.m10 / m.m00, m.m01 / m.m00);
+		cout << p.x <<"  "<<p.y<< endl;
+
+
 		// 5번 피부 부분 영상만 잘라내기  
 		cvtColor(Skin_Area, Skin_Area, CV_GRAY2BGR);
 		Mat image_copy = Mask + (~Skin_Area);
@@ -62,7 +68,7 @@ int main() {
 
 
 		// 배경 이미지의 Region Of Interest 구하기
-		Mat roi = ROI(img_small, image_copy, img2_fg);
+		Mat roi = ROI(img_small, image_copy, img2_fg, p);
 
 		// 배경 이미지의 ROI영역과 워터마크 이미지의 워터마크 영역을 블렌딩
 		
